@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">HelpingHands</string>
+    <string name="title_activity_login">login</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="helping_hands">Helping Hands</string>
+    <string name="login_email">Your Email...</string>
+    <string name="login_pass">Your Password...</string>
+    <string name="login_btn">Log in to your account</string>
+    <string name="new_acc_btn">Need a new Account?</string>
+    <string name="create_acc">Create a new Account</string>
+    <string name="name">Your Full Name...</string>
+    <string name="phone_number">Your Mobile Number...</string>
+    <string name="address">Your Address...</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_acc">Already having an Account, Click Here!</string>
+</resources>
