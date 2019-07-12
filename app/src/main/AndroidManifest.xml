@@ -14,7 +14,7 @@
         <activity android:name=".NewLoan" />
         <activity android:name=".loans" />
         <activity android:name=".createAccount" />
-        <activity android:name=".login" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
