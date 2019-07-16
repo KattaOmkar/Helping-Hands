@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".lender_info">
+    tools:context=".activity.lender_info">
 
     <TextView
         android:id="@+id/textView9"

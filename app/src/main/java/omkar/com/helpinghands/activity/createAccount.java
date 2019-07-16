@@ -1,5 +1,6 @@
-package omkar.com.helpinghands;
+package omkar.com.helpinghands.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,16 +17,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import omkar.com.FirestoreHelper.FireService;
+import omkar.com.helpinghands.R;
+import omkar.com.models.User;
+
 public class createAccount extends AppCompatActivity {
     public Button create_new_account, login;
     public EditText new_mail, new_pass, new_name, new_number, new_address;
     private FirebaseAuth mAuth;
+    private FireService fireService;
+    private ProgressDialog loadingBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         mAuth = FirebaseAuth.getInstance();
+        this.fireService = new FireService().init();
         create_new_account = (Button) findViewById(R.id.create_new_account);
         login = (Button) findViewById(R.id.having_account_already);
         new_mail = (EditText) findViewById(R.id.new_mail);
@@ -33,6 +42,7 @@ public class createAccount extends AppCompatActivity {
         new_name = (EditText) findViewById(R.id.new_name);
         new_number = (EditText) findViewById(R.id.new_number);
         new_address = (EditText) findViewById(R.id.new_address);
+        loadingBar = new ProgressDialog(this);
 
         create_new_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +73,10 @@ public class createAccount extends AppCompatActivity {
     private void CreateNewAccount() {
         final String email = new_mail.getText().toString();
         String password = new_pass.getText().toString();
+        String name = new_name.getText().toString();
+        String number = new_number.getText().toString();
+        String address = new_address.getText().toString();
+        final User userData = new User(name, email, number, address);
         String confirmPassword = new_pass.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
@@ -74,23 +88,26 @@ public class createAccount extends AppCompatActivity {
         } else if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "your password do not match with your confirm password...", Toast.LENGTH_SHORT).show();
         } else {
-//            loadingBar.setTitle("Creating New Account");
-//            loadingBar.setMessage("Please wait, while we are creating your new Account...");
-//            loadingBar.show();
-//            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.setTitle("Creating New Account");
+            loadingBar.setMessage("Please wait, while we are creating your new Account...");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                userData.setUserID(user.getUid());
+                                setUserData(userData);
                                 SendEmailVerificationMessage();
 
-//                                loadingBar.dismiss();
+                                loadingBar.dismiss();
                             } else {
                                 String message = task.getException().getMessage();
                                 Toast.makeText(createAccount.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
-//                                loadingBar.dismiss();
+                                loadingBar.dismiss();
                             }
                         }
                     });
@@ -104,6 +121,10 @@ public class createAccount extends AppCompatActivity {
         finish();
     }
 
+    private void setUserData(User data) {
+        this.fireService.setUserWithData(data);
+    }
+
     private void SendEmailVerificationMessage() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -113,6 +134,7 @@ public class createAccount extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         Toast.makeText(createAccount.this, "Registration is Successfull, Please Check Your Email and verify the account", Toast.LENGTH_SHORT).show();
+
                         SendUserToLoginActivity();
                         mAuth.signOut();
                     } else {

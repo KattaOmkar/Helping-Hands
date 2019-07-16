@@ -1,7 +1,9 @@
-package omkar.com.helpinghands;
+package omkar.com.helpinghands.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import omkar.com.helpinghands.R;
 
 public class loans extends AppCompatActivity {
 

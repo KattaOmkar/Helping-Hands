@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_investor"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_investor" />
+        <item
+            android:id="@+id/nav_lender_info"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_lenderInfo" />
+
+        <item
+            android:id="@+id/nav_loans"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_loans" />
+
+        <item
+            android:id="@+id/nav_new_loan"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_new_loan" />
+    </group>
+
+    <!--<item android:title="Other">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_about_us"-->
+    <!--android:title="@string/nav_about_us" />-->
+    <!--<item-->
+    <!--android:id="@+id/nav_privacy_policy"-->
+    <!--android:title="@string/privacy_policy" />-->
+    <!--</menu>-->
+    <!--</item>-->
+
+</menu>
