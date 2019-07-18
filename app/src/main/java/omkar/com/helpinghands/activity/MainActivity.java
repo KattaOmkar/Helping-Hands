@@ -45,14 +45,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
+
     private static final String TAG_INVESTOR = "investor";
     private static final String TAG_LENDORS = "lenders";
     private static final String TAG_LOANS = "loans";
     private static final String TAG_NEWLOANS = "new_loans";
     private static final String TAG_SETTINGS = "settings";
     // index to identify current nav menu item
-    public static int navItemIndex = 0;
-    public static String CURRENT_TAG = TAG_HOME;
+    public static int navItemIndex = 3;
+    public static String CURRENT_TAG = TAG_LOANS;
     private FirebaseAuth mAuth;
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -147,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
      * like background image, profile image
      * name, website, notifications action view (dot)
      */
+    public void updateUsername(User user) {
+        loadNavHeader(user);
+    }
 
     public void loadNavHeader(User user) {
 
@@ -396,6 +400,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
+            mAuth.signOut();
             SendUserToLoginActivity();
             return true;
         }

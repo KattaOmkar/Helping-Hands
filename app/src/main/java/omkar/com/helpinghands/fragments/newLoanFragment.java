@@ -7,8 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import omkar.com.FirestoreHelper.FireService;
 import omkar.com.helpinghands.R;
+import omkar.com.models.LoanGroup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,13 +30,16 @@ public class newLoanFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public LoanGroup loanGroup;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    boolean isValid = false;
+    private FirebaseAuth mAuth;
+    private EditText nameEdit, loanAmount, reason, loanTenure, loanInterest, phone, address;
     private OnFragmentInteractionListener mListener;
-
+    private Button createLoanGroup;
+    private FireService fireService;
     public newLoanFragment() {
         // Required empty public constructor
     }
@@ -54,20 +64,84 @@ public class newLoanFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        fireService = new FireService().init();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_loan, container, false);
+        Toast.makeText(getContext(), mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+        View newLoanView = inflater.inflate(R.layout.fragment_new_loan, container, false);
+        nameEdit = (EditText) newLoanView.findViewById(R.id.loan_borrower_name);
+        loanAmount = (EditText) newLoanView.findViewById(R.id.borrower_req_amount);
+        loanTenure = (EditText) newLoanView.findViewById(R.id.borrower_req_tenure);
+        loanInterest = (EditText) newLoanView.findViewById(R.id.borrower_int);
+        phone = (EditText) newLoanView.findViewById(R.id.borrower_phone_number);
+        address = (EditText) newLoanView.findViewById(R.id.borrower_address);
+        reason = (EditText) newLoanView.findViewById(R.id.borrower_reason);
+        createLoanGroup = (Button) newLoanView.findViewById(R.id.create_loan_group);
+        loanGroup = new LoanGroup();
+
+
+        createLoanGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isValidData();
+                if (isValid) {
+
+                    loanGroup.setBorrowerId(mAuth.getCurrentUser().getEmail());
+
+                    loanGroup.setBorrowerName(nameEdit.getText().toString());
+                    loanGroup.setBorrowerAddress(address.getText().toString());
+                    loanGroup.setPhone(phone.getText().toString());
+                    loanGroup.setReason(reason.getText().toString());
+                    loanGroup.setDate(System.currentTimeMillis());
+                    loanGroup.setAmount(Float.parseFloat(loanAmount.getText().toString()));
+                    loanGroup.setTenureDays(Integer.parseInt(loanTenure.getText().toString()));
+                    loanGroup.setInterest(Float.parseFloat(loanInterest.getText().toString()));
+                    String res = fireService.createNewLoan(loanGroup);
+                    if ((!res.isEmpty()) && res.equals("SUCCESS")) {
+                        Toast.makeText(getContext(), "Successfully created loan", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Problem Creating loan", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), res, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+
+                }
+
+            }
+        });
+
+        return newLoanView;
     }
 
+    private void isValidData() {
+        EditText[] arr = new EditText[6];
+        arr[0] = nameEdit;
+        arr[1] = loanAmount;
+        arr[2] = loanTenure;
+        arr[3] = loanInterest;
+        arr[4] = phone;
+        arr[5] = address;
+
+        for (EditText e : arr) {
+            if ((e.getText() == null) || (e.getText().toString().isEmpty())) {
+                isValid = false;
+                Toast.makeText(getContext(), "please fill " + e.getId(), Toast.LENGTH_SHORT).show();
+            } else {
+                isValid = true;
+            }
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

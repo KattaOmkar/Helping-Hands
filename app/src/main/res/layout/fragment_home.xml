@@ -6,5 +6,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <!--<include layout="@layout/activity_main"/>-->
+    <EditText
+        android:id="@+id/sampleEdit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="This will change" />
 
 </FrameLayout>

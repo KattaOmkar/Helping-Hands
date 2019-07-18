@@ -4,11 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import omkar.com.helpinghands.R;
+import omkar.com.models.LoanGroup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,19 +23,20 @@ import omkar.com.helpinghands.R;
  * Use the {@link investorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class investorFragment extends Fragment {
+public class ViewLoanFragmenr extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final String TAG = "ViewLoanFragmenr";
+    private TextView name, loanAmount, reason, loanTenure, date, loanInterest, phone, address;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public investorFragment() {
+    public ViewLoanFragmenr() {
         // Required empty public constructor
     }
 
@@ -66,8 +72,18 @@ public class investorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_investor, container, false);
+        View view = inflater.inflate(R.layout.fragment_investor, container, false);
+        name = (TextView) view.findViewById(R.id.borrower_name);
+        loanAmount = (TextView) view.findViewById(R.id.loan_amount);
+        reason = (TextView) view.findViewById(R.id.reason);
+        date = (TextView) view.findViewById(R.id.loan_date);
+        loanTenure = (TextView) view.findViewById(R.id.loan_tenure);
+        loanInterest = (TextView) view.findViewById(R.id.loan_interest);
+        String jsonD = getArguments().getString("jsonD");
+        LoanGroup loanGroup = new Gson().fromJson(jsonD, LoanGroup.class);
+        Log.d(TAG, "onCreateView: ViewLoan Fragment");
+        Log.d(TAG, loanGroup.toString());
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
