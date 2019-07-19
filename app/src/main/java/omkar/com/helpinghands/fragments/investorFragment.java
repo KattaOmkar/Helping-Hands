@@ -4,11 +4,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import omkar.com.helpinghands.R;
+import omkar.com.models.LoanGroup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +38,10 @@ public class investorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private TextView borrower_name, loan_amount, reason, loan_date, loan_interest, loan_tenure, borrower_phone_num,
+            amount_return, amount_divider;
+    private EditText investor_amount;
+    private Button button_invest;
     private OnFragmentInteractionListener mListener;
 
     public investorFragment() {
@@ -62,12 +76,62 @@ public class investorFragment extends Fragment {
 
     }
 
+    private String TAG = "investorFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        User investor =
+        LoanGroup lg;
+        Bundle b = getArguments();
+        Log.d(TAG, "Bundle BBB");
+        Log.d(TAG, "+" + (b.getString("JSOND")));
 
-        return inflater.inflate(R.layout.fragment_investor, container, false);
+
+        View viewThis = inflater.inflate(R.layout.fragment_investor, container, false);
+        if ((b == null) || ((b != null) && (b.getString("JSOND").isEmpty()))) {
+            Log.d(TAG, "onCreateView: nulllll");
+            return viewThis;
+        }
+        lg = new Gson().fromJson(b.getString("JSOND"), LoanGroup.class);
+        borrower_name = viewThis.findViewById(R.id.borrower_name);
+        borrower_name.setText("Borrower :" + lg.getBorrowerName());
+
+        loan_amount = viewThis.findViewById(R.id.loan_amount);
+        loan_amount.setText("Loan Amount :" + String.valueOf(lg.getAmount()));
+
+        reason = viewThis.findViewById(R.id.reason);
+        reason.setText(lg.getReason());
+
+        loan_date = viewThis.findViewById(R.id.loan_date);
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        loan_date.setText(df.format(new Date(lg.getDate())));
+
+        loan_interest = viewThis.findViewById(R.id.loan_interest);
+        loan_interest.setText(String.valueOf(lg.getInterest() + "%"));
+
+        loan_tenure = viewThis.findViewById(R.id.loan_tenure);
+        loan_tenure.setText("Loan Tenure: " + String.valueOf(lg.getTenureDays()) + " Days");
+
+        borrower_phone_num = viewThis.findViewById(R.id.borrower_phone_num);
+        borrower_phone_num.setText("Phone : " + lg.getPhone());
+
+        amount_return = viewThis.findViewById(R.id.amount_return);
+
+        if ((lg.getAmount() - lg.getAmountBorrowed() != Float.valueOf("0.0")) && (lg.getInterest() != Float.valueOf("0.0"))) {
+
+        }
+
+        Float amtRt = (lg.getAmount() - lg.getAmountBorrowed()) * lg.getInterest();
+        amtRt = amtRt + (amtRt * (lg.getTenureDays() / Float.valueOf("365.0"))) / Float.valueOf("100.00");
+
+        amount_return.setText("Amount to Return :" + String.valueOf(amtRt));
+
+        amount_divider = viewThis.findViewById(R.id.amount_divider);
+        investor_amount = viewThis.findViewById(R.id.investor_amount);
+        button_invest = viewThis.findViewById(R.id.button_invest);
+
+        return viewThis;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

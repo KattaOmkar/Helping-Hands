@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            android:paddingLeft="10dp"
             android:text="Borrower XXX"
             android:gravity="left"
             android:textColor="@android:color/black"
@@ -52,15 +53,17 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content">-->
 
-        <TextView
-            android:id="@+id/loan_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:gravity="right"
-            android:text="29/05/2019"
-            android:inputType="date"
-            android:textColor="@android:color/black" />
+    <TextView
+        android:id="@+id/loan_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.4"
+        android:gravity="right"
+        android:inputType="date"
+        android:paddingRight="20dp"
+        android:text="29/05/2019"
+        android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/loan_interest"

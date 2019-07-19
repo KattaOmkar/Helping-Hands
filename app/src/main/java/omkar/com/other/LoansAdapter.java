@@ -2,7 +2,11 @@ package omkar.com.other;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +15,30 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import omkar.com.helpinghands.R;
+import omkar.com.helpinghands.fragments.investorFragment;
 import omkar.com.models.LoanGroup;
 
 public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClickListener {
     String TAG = "LoansAdapter";
     private TextView name, loanAmount, reason, loanTenure, date, loanInterest, phone, address;
+    private FragmentManager manager;
 
-    public LoansAdapter(Context context, List<LoanGroup> loans) {
+    public LoansAdapter(FragmentManager manager, Context context, List<LoanGroup> loans) {
         super(context, 0, loans);
+        this.manager = manager;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Toast.makeText(getContext(), "INSIDE LOANS ADAPTER", Toast.LENGTH_SHORT).show();
         // Get the data item for this position
         Log.d(TAG, "---------------getView:-------------------- ");
@@ -35,7 +47,7 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         Log.d(TAG, "Parent is empty -" + (parent == null));
 
 
-        LoanGroup loan = getItem(position);
+        final LoanGroup loan = getItem(position);
 
         Log.d(TAG, "-----------------------" + (loan == null));
 //        Log.d(TAG, loan.getBorrowerId());
@@ -51,6 +63,14 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         date = (TextView) convertView.findViewById(R.id.loan_date);
         loanTenure = (TextView) convertView.findViewById(R.id.loan_tenure);
         loanInterest = (TextView) convertView.findViewById(R.id.loan_interest);
+//        reason.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                final LoanGroup item = getItem(position);
+//
+//                Log.d(TAG, "...........onClick: CLICEKD.........");
+//            }
+//        });
         // Lookup view for data population
 
 
@@ -58,9 +78,26 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         name.setText(loan.getBorrowerName());
         loanAmount.setText(String.valueOf(loan.getAmount()));
         reason.setText(loan.getReason());
-        date.setText(String.valueOf(loan.getDate()));
-//        loanTenure.setText(loan.getTenureDays());
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        date.setText(df.format(new Date(loan.getDate())));
+        loanTenure.setText(String.valueOf(loan.getTenureDays()));
         loanInterest.setText(String.valueOf(loan.getInterest()));
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: OF row .........................");
+                Fragment fragment = new investorFragment();
+                Bundle b = new Bundle();
+                b.putString("JSOND", new Gson().toJson(loan, LoanGroup.class));
+                fragment.setArguments(b);
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, "investor");
+                fragmentTransaction.commitAllowingStateLoss();
+
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
@@ -73,7 +110,7 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         Object object = getItem(position);
         LoanGroup item = (LoanGroup) object;
 
-//        switch (view.getId())
+//        switch (view.getId()) ...........onClick: CLICEKD.........
 //        {
 //            case R.id.reason:
 //                Toast.makeText(getContext(), dataModel.toString(), Toast.LENGTH_SHORT).show();
