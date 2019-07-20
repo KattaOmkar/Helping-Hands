@@ -63,15 +63,6 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         date = (TextView) convertView.findViewById(R.id.loan_date);
         loanTenure = (TextView) convertView.findViewById(R.id.loan_tenure);
         loanInterest = (TextView) convertView.findViewById(R.id.loan_interest);
-//        reason.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                final LoanGroup item = getItem(position);
-//
-//                Log.d(TAG, "...........onClick: CLICEKD.........");
-//            }
-//        });
-        // Lookup view for data population
 
 
 //         Populate the data into the template view using the data object
@@ -80,7 +71,7 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         reason.setText(loan.getReason());
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         date.setText(df.format(new Date(loan.getDate())));
-        loanTenure.setText(String.valueOf(loan.getTenureDays()));
+        loanTenure.setText(String.valueOf(loan.getTenureMonths()));
         loanInterest.setText(String.valueOf(loan.getInterest()));
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,24 +101,6 @@ public class LoansAdapter extends ArrayAdapter<LoanGroup> implements View.OnClic
         Object object = getItem(position);
         LoanGroup item = (LoanGroup) object;
 
-//        switch (view.getId()) ...........onClick: CLICEKD.........
-//        {
-//            case R.id.reason:
-//                Toast.makeText(getContext(), dataModel.toString(), Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-
-
-//        Fragment fragment = new newLoanFragment();
-//        Bundle b = new Bundle();
-//        b.putString("jsonD",new Gson().toJson(item,LoanGroup.class));
-//        fragment.setArguments(b);
-//        FragmentTransaction fragmentTransaction = view.getParent()
-//
-//        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-//                android.R.anim.fade_out);
-//        fragmentTransaction.replace(R.id.frame, fragment, "new_loans");
-//        fragmentTransaction.commitAllowingStateLoss();
 
 
     }

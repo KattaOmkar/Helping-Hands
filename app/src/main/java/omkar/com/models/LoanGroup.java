@@ -3,55 +3,87 @@ package omkar.com.models;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class LoanGroup {
-    private ArrayList<Lender> lenders = new ArrayList<Lender>();
+    private ArrayList<Lender> lenders;
     private String borrowerAddress;
     private String reason;
     private float amount;
     private float amountBorrowed;
-    private String borrowerId;
+    private String borrowerID;
     private String borrowerName;
     private long date;
     private float interest;
     private String phone;
-    private int tenureDays;
+    private int tenureMonths;
 
     public LoanGroup() {
     }
 
+    public static Map<String, Object> makeTOMap(final LoanGroup loanGroup) {
+        if (loanGroup != null) {
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("borrowerID", loanGroup.getBorrowerID());
+            objectMap.put("borrowerName", loanGroup.getBorrowerName());
+            objectMap.put("date", String.valueOf(loanGroup.getDate()));
+            objectMap.put("borrowerAddress", loanGroup.getBorrowerAddress());
+            objectMap.put("reason", loanGroup.getReason());
+            objectMap.put("phone", loanGroup.getPhone());
+            objectMap.put("amount", loanGroup.getAmount());
+            objectMap.put("amountBorrowed", loanGroup.getAmountBorrowed());
+            objectMap.put("interest", loanGroup.getInterest());
+            objectMap.put("tenureMonths", loanGroup.getTenureMonths());
+            return objectMap;
+        }
+        return null;
+
+    }
+
     public static LoanGroup makeFromMap(final Map<String, Object> map) {
         Gson gson = new Gson();
-        map.put("date", System.currentTimeMillis());
-        LoanGroup g = gson.fromJson(map.toString(), LoanGroup.class);
-//        LoanGroup g = new LoanGroup();
+//        LoanGroup g = gson.fromJson(map.toString(), LoanGroup.class);
+        LoanGroup g = new LoanGroup();
+        ArrayList<Lender> lenderArrayList = new ArrayList<>();
 //        Log.d("LOAN GRP", map.toString());
 //        Log.d("LOAN GRP", g.borrowerId);
 //        Log.d("LOAN GRP", g.borrowerName);
 //        Log.d("LOAN GRP", g.borrowerAddress);
 
-//        if ((map != null) && (!map.isEmpty())) {
-//            if (! map.get("borrowerID").equals("Borrowerid")) {
-//                g.setBorrowerId(map.get("borrowerID").toString());
-//                g.setDate(Long.parseLong(map.get("date").toString()));
-//                g.setBorrowerName(map.get("borrowerName").toString());
-//                g.setBorrowerAddress(map.get("borrowerAddress").toString());
-//                g.setReason(map.get("reason").toString());
-//                g.setPhone(map.get("phone").toString());
-//                g.setAmount(Float.parseFloat(map.get("amount").toString()));
-//                g.setAmountBorrowed(Float.parseFloat(map.get("amountBorrowed").toString()));
-//                g.setInterest(Float.parseFloat(map.get("interest").toString()));
-//                g.setTenureDays(Integer.parseInt(map.get("tenureDays").toString()));
+        if ((map != null) && (!map.isEmpty())) {
+            if (!map.get("borrowerID").equals("Borrowerid")) {
+                g.setBorrowerID(map.get("borrowerID").toString());
+                g.setDate(Long.parseLong(map.get("date").toString()));
+                g.setBorrowerName(map.get("borrowerName").toString());
+                g.setBorrowerAddress(map.get("borrowerAddress").toString());
+                g.setReason(map.get("reason").toString());
+                g.setPhone(map.get("phone").toString());
+                g.setAmount(Float.parseFloat(map.get("amount").toString()));
+                g.setAmountBorrowed(Float.parseFloat(map.get("amountBorrowed").toString()));
+                g.setInterest(Float.parseFloat(map.get("interest").toString()));
+                g.setTenureMonths(Integer.parseInt(map.get("tenureMonths").toString()));
+
+                Map<String, Object> mapL = (HashMap) map.get("lenders");
+                if ((mapL != null) && (!mapL.isEmpty())) {
 
 
-//            }
-//        }
+                    for (String key : mapL.keySet()) {
+                        Lender lender = new Gson().fromJson(mapL.get(key).toString(), Lender.class);
+                        lenderArrayList.add(lender);
+                    }
+                }
+
+                g.setLenders(lenderArrayList);
+
+
+            }
+        }
         return g;
     }
 
     public ArrayList<Lender> getLenders() {
-        return lenders;
+        return ((lenders != null) ? lenders : new ArrayList<Lender>());
     }
 
     public void setLenders(ArrayList<Lender> lenders) {
@@ -90,12 +122,12 @@ public class LoanGroup {
         this.amountBorrowed = amountBorrowed;
     }
 
-    public String getBorrowerId() {
-        return borrowerId;
+    public String getBorrowerID() {
+        return borrowerID;
     }
 
-    public void setBorrowerId(String borrowerId) {
-        this.borrowerId = borrowerId;
+    public void setBorrowerID(String borrowerId) {
+        this.borrowerID = borrowerId;
     }
 
     public String getBorrowerName() {
@@ -130,12 +162,12 @@ public class LoanGroup {
         this.phone = phone;
     }
 
-    public int getTenureDays() {
-        return tenureDays;
+    public int getTenureMonths() {
+        return tenureMonths;
     }
 
-    public void setTenureDays(int tenureDays) {
-        this.tenureDays = tenureDays;
+    public void setTenureMonths(int tenureMonths) {
+        this.tenureMonths = tenureMonths;
     }
 
     @Override

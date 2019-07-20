@@ -30,7 +30,7 @@ import omkar.com.other.LoansAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
+ * Activities that conLoansAdaptertain this fragment must implement the
  * {@link loansFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link loansFragment#newInstance} factory method to
@@ -83,9 +83,9 @@ public class loansFragment extends Fragment implements newLoanFragment.OnFragmen
         super.onCreate(savedInstanceState);
         LoanGroup h = new LoanGroup();
         h.setDate(System.currentTimeMillis());
-        h.setBorrowerId("DEMO@GMAIL>COM");
+        h.setBorrowerID("DEMO@GMAIL>COM");
         h.setReason("DEMO");
-        h.setTenureDays(Integer.parseInt("10"));
+        h.setTenureMonths(Integer.parseInt("10"));
         h.setInterest(Float.valueOf(10));
         h.setAmount(Float.valueOf(100));
         h.setPhone("987456321");
@@ -130,16 +130,11 @@ public class loansFragment extends Fragment implements newLoanFragment.OnFragmen
                     Log.d("loansFrag", jsonD.toString());
                     final LoanGroup holder = LoanGroup.makeFromMap(jsonD);
                     listOfLoans.add(holder);
-                    Log.d("loansFrag", "onSuccess: loanGroups count " + listOfLoans.size());
+
                 }
-                Toast.makeText(getContext(), "ONCREATEVIEW-Loans", Toast.LENGTH_SHORT).show();
 
                 // Inflate the layout for this fragment
-
-                Toast.makeText(getContext(), "listOfLoans.size() " + listOfLoans.size(), Toast.LENGTH_SHORT).show();
                 ListView listView = (ListView) view.findViewById(R.id.loan_list);
-
-
                 LoansAdapter adapter = new LoansAdapter(getFragmentManager(), getContext(), listOfLoans);
                 listView.setAdapter(adapter);
 

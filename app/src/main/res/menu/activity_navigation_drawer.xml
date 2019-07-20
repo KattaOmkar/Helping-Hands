@@ -4,26 +4,26 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_investor"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_investor" />
-        <item
-            android:id="@+id/nav_lender_info"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_lender_info" />
+        <!--<item-->
+        <!--android:id="@+id/nav_home"-->
+        <!--android:icon="@drawable/ic_menu_camera"-->
+        <!--android:title="@string/menu_home" />-->
+        <!--<item-->
+        <!--android:id="@+id/nav_investor"-->
+        <!--android:icon="@drawable/ic_menu_gallery"-->
+        <!--android:title="@string/menu_investor" />-->
+        <!--<item-->
+        <!--android:id="@+id/nav_lender_info"-->
+        <!--android:icon="@drawable/ic_menu_slideshow"-->
+        <!--android:title="@string/menu_lender_info" />-->
         <item
             android:id="@+id/nav_loans"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_send"
             android:title="@string/menu_loans" />
-        <item
-            android:id="@+id/nav_new_loan"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_new_loan" />
+        <!--<item-->
+        <!--android:id="@+id/nav_new_loan"-->
+        <!--android:icon="@drawable/ic_menu_manage"-->
+        <!--android:title="@string/menu_new_loan" />-->
     </group>
 
     <item android:title="Communicate">

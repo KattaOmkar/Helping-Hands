@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/Investors_lable"
@@ -29,7 +31,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -150,6 +154,21 @@
 
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/loan_lenders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="8dp" />
+        </TableRow>
+
         <TableRow android:divider="@color/colorPrimaryDark">
 
             <EditText
@@ -166,7 +185,9 @@
                 tools:layout_editor_absoluteY="196dp" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/amount_divider"
@@ -182,20 +203,23 @@
                 tools:layout_editor_absoluteY="200dp" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/button_invest"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@android:color/holo_green_dark"
-                android:text="Invest"
+                android:text="Lend"
                 android:textColor="@android:color/white"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="247dp" />
         </TableRow>
+
     </TableLayout>
 
 

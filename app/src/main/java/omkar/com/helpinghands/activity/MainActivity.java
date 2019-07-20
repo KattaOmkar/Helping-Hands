@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private static final String TAG_NEWLOANS = "new_loans";
     private static final String TAG_SETTINGS = "settings";
     // index to identify current nav menu item
-    public static int navItemIndex = 3;
+    public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_LOANS;
     private FirebaseAuth mAuth;
     private NavigationView navigationView;
@@ -236,10 +236,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
-            case 0:
-                // home
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+//            case 0:
+//                // home
+//                HomeFragment homeFragment = new HomeFragment();
+//                return homeFragment;
             case 1:
                 // photos
                 investorFragment investorFragment = new investorFragment();
@@ -248,15 +248,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 // movies fragment
                 lenderInfoFragment lender_infoFragment = new lenderInfoFragment();
                 return lender_infoFragment;
-            case 3:
+            case 0:
                 // notifications fragment
                 loansFragment loansFragment = new loansFragment();
                 return loansFragment;
 
-            case 4:
-                // settings fragment
-                newLoanFragment newLoanFragment = new newLoanFragment();
-                return newLoanFragment;
+//            case 4:
+//                // settings fragment
+//                newLoanFragment newLoanFragment = new newLoanFragment();
+//                return newLoanFragment;
             default:
                 return new HomeFragment();
         }
@@ -280,26 +280,26 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_home:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
-                        break;
-                    case R.id.nav_investor:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_INVESTOR;
-                        break;
-                    case R.id.nav_lender_info:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_LENDORS;
-                        break;
+//                    case R.id.nav_home:
+//                        navItemIndex = 0;
+//                        CURRENT_TAG = TAG_HOME;
+//                        break;
+//                    case R.id.nav_investor:
+//                        navItemIndex = 1;
+//                        CURRENT_TAG = TAG_INVESTOR;
+//                        break;
+//                    case R.id.nav_lender_info:
+//                        navItemIndex = 2;
+//                        CURRENT_TAG = TAG_LENDORS;
+//                        break;
                     case R.id.nav_loans:
-                        navItemIndex = 3;
+                        navItemIndex = 0;
                         CURRENT_TAG = TAG_LOANS;
                         break;
-                    case R.id.nav_new_loan:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_NEWLOANS;
-                        break;
+//                    case R.id.nav_new_loan:
+//                        navItemIndex = 4;
+//                        CURRENT_TAG = TAG_NEWLOANS;
+//                        break;
 //                    case R.id.nav_about_us:
 //                        // launch new intent instead of loading fragment
 //                        startActivity(new Intent(MainActivity.this, AboutUsActivity.class));

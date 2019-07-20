@@ -61,6 +61,7 @@ public class FireService {
 //
 //            }
 //        });
+        Log.d(TAG, "setUserWithData: email" + map.get("email").toString());
 
         this.firestore.collection("users").document(map.get("email").toString()).set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -108,14 +109,14 @@ public class FireService {
         return this.firestore.collection("loanGroups");
     }
 
-    public String createNewLoan(LoanGroup loanGroup) {
+    public Task<Void> createNewLoan(LoanGroup loanGroup) {
 
         if (loanGroup == null) {
-            return "null loangroup";
+            return null;
         }
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("borrowerID", loanGroup.getBorrowerId());
+        map.put("borrowerID", loanGroup.getBorrowerID());
         map.put("borrowerName", loanGroup.getBorrowerName());
         map.put("reason", loanGroup.getReason());
         map.put("phone", loanGroup.getPhone());
@@ -124,19 +125,13 @@ public class FireService {
         map.put("amountBorrowed", new Float(0));
         map.put("date", loanGroup.getDate());
         map.put("interest", loanGroup.getInterest());
-        map.put("tenureDays", loanGroup.getTenureDays());
+        map.put("tenureMonths", loanGroup.getTenureMonths());
         Log.d(TAG, "createNewLoan: ***********************");
         Log.d(TAG, map.toString());
-        this.getLoansCollection().document(map.get("borrowerID").toString() + "__" + map.get("date").toString())
-                .set(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        res = "SUCCESS";
-                    }
-                });
+        Task<Void> task = this.getLoansCollection().document(map.get("borrowerID").toString() + "__" + map.get("date").toString())
+                .set(map);
 
-        return res;
+        return task;
     }
 
     public List<LoanGroup> getAllLoans() {
@@ -162,5 +157,17 @@ public class FireService {
 
         return loanGroups;
     }
+
+    public CollectionReference getMyBorrowings(String email) {
+        CollectionReference csr = this.firestore.collection("myBorrowings").document(email).collection("list");
+
+
+        return csr;
+    }
+
+    public CollectionReference getMyLendings(String email) {
+        return this.firestore.collection("myLendings").document(email).collection("list");
+    }
+
 
 }
