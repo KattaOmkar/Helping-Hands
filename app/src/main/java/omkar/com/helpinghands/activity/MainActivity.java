@@ -30,16 +30,19 @@ import com.google.firebase.auth.FirebaseUser;
 import omkar.com.FirestoreHelper.FireService;
 import omkar.com.helpinghands.R;
 import omkar.com.helpinghands.fragments.HomeFragment;
+import omkar.com.helpinghands.fragments.dummy.DummyContent;
 import omkar.com.helpinghands.fragments.investorFragment;
 import omkar.com.helpinghands.fragments.lenderInfoFragment;
 import omkar.com.helpinghands.fragments.loansFragment;
+import omkar.com.helpinghands.fragments.myBorrowsFragment;
 import omkar.com.helpinghands.fragments.newLoanFragment;
 import omkar.com.models.User;
 import omkar.com.other.CircleTransformer;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
         investorFragment.OnFragmentInteractionListener, lenderInfoFragment.OnFragmentInteractionListener,
-        loansFragment.OnFragmentInteractionListener, newLoanFragment.OnFragmentInteractionListener {
+        loansFragment.OnFragmentInteractionListener, newLoanFragment.OnFragmentInteractionListener,
+        myBorrowsFragment.OnListFragmentInteractionListener {
 
     private static final String urlNavHeaderBg = "https://api.androidhive.info/images/nav-menu-header-bg.jpg";
     private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
@@ -48,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private static final String TAG_INVESTOR = "investor";
     private static final String TAG_LENDORS = "lenders";
+    private static final String TAG_LENDOR_INFO = "lender_info";
     private static final String TAG_LOANS = "loans";
+    private static final String TAG_BORROWS = "borrows";
+    private static final String TAG_LENTS = "lents";
     private static final String TAG_NEWLOANS = "new_loans";
     private static final String TAG_SETTINGS = "settings";
     // index to identify current nav menu item
@@ -242,16 +248,27 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 //                return homeFragment;
             case 1:
                 // photos
-                investorFragment investorFragment = new investorFragment();
-                return investorFragment;
+
+                myBorrowsFragment myBorrowsFragment = new myBorrowsFragment();
+                Bundle b = new Bundle();
+                b.putString("TYPE", String.valueOf(0));
+                myBorrowsFragment.setArguments(b);
+                return myBorrowsFragment;
             case 2:
                 // movies fragment
-                lenderInfoFragment lender_infoFragment = new lenderInfoFragment();
-                return lender_infoFragment;
+                myBorrowsFragment myLentsFragment = new myBorrowsFragment();
+                Bundle bb = new Bundle();
+                bb.putString("TYPE", String.valueOf(1));
+                myLentsFragment.setArguments(bb);
+                return myLentsFragment;
             case 0:
                 // notifications fragment
                 loansFragment loansFragment = new loansFragment();
                 return loansFragment;
+//            case 3:
+//                // notifications fragment
+//                loansFragment loansFragment = new loansFragment();
+//                return loansFragment;
 
 //            case 4:
 //                // settings fragment
@@ -284,14 +301,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 //                        navItemIndex = 0;
 //                        CURRENT_TAG = TAG_HOME;
 //                        break;
-//                    case R.id.nav_investor:
-//                        navItemIndex = 1;
-//                        CURRENT_TAG = TAG_INVESTOR;
-//                        break;
-//                    case R.id.nav_lender_info:
-//                        navItemIndex = 2;
-//                        CURRENT_TAG = TAG_LENDORS;
-//                        break;
+                    case R.id.nav_myborrows:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_BORROWS;
+                        break;
+                    case R.id.nav_mylents:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_LENTS;
+                        break;
                     case R.id.nav_loans:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_LOANS;
@@ -437,6 +454,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
 

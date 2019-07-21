@@ -138,10 +138,10 @@ public class investorFragment extends Fragment {
         loan_interest.setText(String.valueOf(lg.getInterest() + "%"));
 
         loan_tenure = viewThis.findViewById(R.id.loan_tenure);
-        loan_tenure.setText("Loan Tenure: " + String.valueOf(lg.getTenureMonths()) + " Days");
+        loan_tenure.setText("Tenure: " + String.valueOf(lg.getTenureMonths()) + " Months");
 
         borrower_phone_num = viewThis.findViewById(R.id.borrower_phone_num);
-        borrower_phone_num.setText("Phone : " + lg.getPhone());
+        borrower_phone_num.setText("Ph : " + lg.getPhone());
 
         amount_return = viewThis.findViewById(R.id.amount_return);
 
@@ -153,7 +153,7 @@ public class investorFragment extends Fragment {
         Float amtRt = lg.getAmount();
         amtRt = amtRt + (amtRt * lg.getInterest() * lg.getTenureMonths()) / ((Float.valueOf("12")) * Float.valueOf("100.00"));
         final Float amtRtCopy = amtRt;
-        amount_return.setText("Amount to Return :" + String.valueOf(amtRt));
+        amount_return.setText("Return Amount :" + String.valueOf(amtRt));
 
 
         if (lg.getLenders() != null) {
@@ -198,10 +198,11 @@ public class investorFragment extends Fragment {
                                     lender.setAmount_Lent(f);
                                     lender.setAmount_lent(true);
                                     lender.setAmount_refunded(false);
-                                    lender.setReturnAmount(amtRtCopy);
+                                    Float amtRtForLender = lender.getAmount_Lent() + (lender.getAmount_Lent() * lg.getInterest() * lg.getTenureMonths()) / ((Float.valueOf("12")) * Float.valueOf("100.00"));
+                                    lender.setReturnAmount(amtRtForLender);
                                     lenderArrayList.add(lender);
                                     final String pathTOLoan = lg.getBorrowerID().concat("__").concat(String.valueOf(lg.getDate()));
-                                    Log.d(TAG, "///////////////////////");
+                                    Log.d(TAG, "/////amountBorrowed//////////////////");
                                     Log.d(TAG, pathTOLoan);
                                     fs.getLoansCollection().document(pathTOLoan).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
@@ -212,7 +213,12 @@ public class investorFragment extends Fragment {
 
                                                 ArrayList<Lender> list = loanGroupH.getLenders();
                                                 list.add(lender);
-                                                loanGroupH.setAmountBorrowed(lender.getAmount_Lent());
+                                                if (loanGroupH.getAmountBorrowed() <= Float.valueOf("0.0")) {
+                                                    loanGroupH.setAmountBorrowed(lender.getAmount_Lent());
+                                                } else {
+                                                    loanGroupH.setAmountBorrowed(loanGroupH.getAmountBorrowed() + lender.getAmount_Lent());
+                                                }
+
                                                 loanGroupH.setLenders(list);
                                                 Gson json = new Gson();
                                                 final CollectionReference myBorrows = fs.getMyBorrowings(loanGroupH.getBorrowerID());

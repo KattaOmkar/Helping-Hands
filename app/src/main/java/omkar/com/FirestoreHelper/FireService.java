@@ -122,7 +122,7 @@ public class FireService {
         map.put("phone", loanGroup.getPhone());
         map.put("borrowerAddress", loanGroup.getBorrowerAddress());
         map.put("amount", loanGroup.getAmount());
-        map.put("amountBorrowed", new Float(0));
+        map.put("amountBorrowed", Float.valueOf(0));
         map.put("date", loanGroup.getDate());
         map.put("interest", loanGroup.getInterest());
         map.put("tenureMonths", loanGroup.getTenureMonths());

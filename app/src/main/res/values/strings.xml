@@ -25,7 +25,8 @@
     <!--<string name="menu_investor">Investor</string>-->
     <!--<string name="menu_lender_info">Lender-Info</string>-->
     <string name="menu_loans">Loans</string>
-    <!--<string name="menu_new_loan">New Loan</string>-->
+    <string name="menu_nav_myborrows">My Borrows</string>
+    <string name="menu_nav_mylents">My Lents</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="action_logout">Logout</string>
@@ -34,6 +35,8 @@
     <string-array name="nav_item_activity_titles">
         <!--<item>Home</item>-->
         <item>Loans</item>
+        <item>My Borrows</item>
+        <item>My Lents</item>
         <!--<item>Investor</item>-->
         <!--<item>LendorInfo</item>-->
 

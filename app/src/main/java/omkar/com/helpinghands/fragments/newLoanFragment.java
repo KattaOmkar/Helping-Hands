@@ -118,7 +118,7 @@ public class newLoanFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(getContext(), "Successfully created loan", Toast.LENGTH_SHORT).show();
-                            Fragment fragment = new newLoanFragment();
+                            Fragment fragment = new loansFragment();
                             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                             fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                                     android.R.anim.fade_out);

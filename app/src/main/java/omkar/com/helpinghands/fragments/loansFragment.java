@@ -81,17 +81,17 @@ public class loansFragment extends Fragment implements newLoanFragment.OnFragmen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LoanGroup h = new LoanGroup();
-        h.setDate(System.currentTimeMillis());
-        h.setBorrowerID("DEMO@GMAIL>COM");
-        h.setReason("DEMO");
-        h.setTenureMonths(Integer.parseInt("10"));
-        h.setInterest(Float.valueOf(10));
-        h.setAmount(Float.valueOf(100));
-        h.setPhone("987456321");
-        h.setBorrowerAddress("ASD ASD ASD ASD");
-        h.setBorrowerName("DEMO PERSON");
-        listOfLoans.add(h);
+//        LoanGroup h = new LoanGroup();
+//        h.setDate(System.currentTimeMillis());
+//        h.setBorrowerID("DEMO@GMAIL>COM");
+//        h.setReason("DEMO");
+//        h.setTenureMonths(Integer.parseInt("10"));
+//        h.setInterest(Float.valueOf(10));
+//        h.setAmount(Float.valueOf(100));
+//        h.setPhone("987456321");
+//        h.setBorrowerAddress("ASD ASD ASD ASD");
+//        h.setBorrowerName("DEMO PERSON");
+//        listOfLoans.add(h);
 
 
 

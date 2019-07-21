@@ -1,14 +1,26 @@
 package omkar.com.helpinghands.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.Gson;
+
+import omkar.com.FirestoreHelper.FireService;
 import omkar.com.helpinghands.R;
+import omkar.com.models.Lender;
+import omkar.com.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,13 +35,14 @@ public class lenderInfoFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static String TAG = "lenderInfoFragment";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    User user;
+    private TextView lender_name, lender_amount, lender_returns, lender_mobile_number, lender_address;
     public lenderInfoFragment() {
         // Required empty public constructor
     }
@@ -52,9 +65,12 @@ public class lenderInfoFragment extends Fragment {
         return fragment;
     }
 
+    private FireService fireService;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.fireService = new FireService().init();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -65,7 +81,49 @@ public class lenderInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lender_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_lender_info, container, false);
+        Bundle b = getArguments();
+        Lender lender = new Gson().fromJson(b.getString("JSOND"), Lender.class);
+        Log.d(TAG, "lenderInfoFragment: ");
+        Log.d(TAG, "+" + (lender == null));
+        lender_name = (TextView) view.findViewById(R.id.lender_name);
+        lender_amount = (TextView) view.findViewById(R.id.lender_amount);
+        lender_returns = (TextView) view.findViewById(R.id.lender_returns);
+        lender_mobile_number = (TextView) view.findViewById(R.id.lender_mobile_number);
+        lender_address = (TextView) view.findViewById(R.id.lender_address);
+        lender_name.setText("Lender: " + lender.getUserName());
+        lender_amount.setText("Amount lent: " + String.valueOf(lender.getAmount_Lent()));
+        lender_returns.setText("Returns: " + String.valueOf(lender.getReturnAmount()));
+        final Intent callIntent = new Intent(Intent.ACTION_CALL);
+
+        this.fireService.getUsersRef().document(lender.getUserId()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        user = User.setDataFromDocument(task.getResult().getData());
+                        if ((user != null) && (!user.getNumber().isEmpty())) {
+
+                            lender_address.setText("Address: " + user.getAddress());
+                            Log.i(TAG, "USR-phone " + user.getNumber());
+                            lender_mobile_number.setText("Mobile Number: " + user.getNumber());
+                            callIntent.setData(Uri.parse("tel:" + user.getNumber()));
+                        } else {
+                            lender_mobile_number.setText("Not Provided");
+                            lender_address.setText("Not Provided");
+                        }
+
+
+                    }
+                });
+        lender_mobile_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(callIntent);
+            }
+        });
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

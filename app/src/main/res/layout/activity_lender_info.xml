@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Shyam"
                 android:id="@+id/lender_name"
                 android:textSize="18dp"
@@ -77,17 +78,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:inputType="phone"
+
                 android:text="Mobile Number : 1234567890"
-                android:autoLink="phone"
+
                 android:id="@+id/lender_mobile_number"
                 android:textSize="18dp"
+                android:textAppearance="@style/Widget.AppCompat.Spinner.Underlined"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
 
