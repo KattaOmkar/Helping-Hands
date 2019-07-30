@@ -13,4 +13,46 @@
     <string name="address">Your Address...</string>
     <string name="create_account">Create Account</string>
     <string name="already_acc">Already having an Account, Click Here!</string>
+    <string name="title_activity_navigation">HelpingHands</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!--<string name="menu_home">Home</string>-->
+    <!--<string name="menu_investor">Investor</string>-->
+    <!--<string name="menu_lender_info">Lender-Info</string>-->
+    <string name="menu_loans">Loans</string>
+    <string name="menu_nav_myborrows">My Borrows</string>
+    <string name="menu_nav_mylents">My Lents</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="action_logout">Logout</string>
+    <string name="openDrawer">Open</string>
+    <string name="closeDrawer">Close</string>
+    <string-array name="nav_item_activity_titles">
+        <!--<item>Home</item>-->
+        <item>Loans</item>
+        <item>My Borrows</item>
+        <item>My Lents</item>
+        <!--<item>Investor</item>-->
+        <!--<item>LendorInfo</item>-->
+
+        <!--<item>NewLoan</item>-->
+    </string-array>
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_investor">Investor</string>
+    <string name="nav_lenderInfo">LenderInfo</string>
+    <string name="nav_loans">Loans</string>
+    <string name="nav_new_loan">New Loan</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+    <!--<string name="nav_about_us">About Us</string>-->
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

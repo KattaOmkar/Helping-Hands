@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loans">
+    tools:context=".activity.loans">
 
     <TextView
         android:id="@+id/textView5"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/loan_list"
+        android:id="@+id/loan_list_act"
         android:layout_width="395dp"
         android:layout_height="648dp"
         android:layout_marginTop="8dp"
@@ -36,12 +36,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="600dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_add_black_24dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="329dp"
-        tools:layout_editor_absoluteY="645dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="645dp" />
 
 </android.support.constraint.ConstraintLayout>
