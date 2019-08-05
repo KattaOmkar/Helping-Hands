@@ -161,7 +161,7 @@ public class investorFragment extends Fragment {
 
             lenderArrayList = lg.getLenders();
             InvestorsAdapter investorsAdapter = new InvestorsAdapter
-                    (getFragmentManager(), getContext(), lenderArrayList);
+                    (getFragmentManager(), getContext(), lenderArrayList, lg);
             loan_lenders.setAdapter(investorsAdapter);
 
         } else {
@@ -170,7 +170,7 @@ public class investorFragment extends Fragment {
 
 
         amount_divider = viewThis.findViewById(R.id.amount_divider);
-        amount_divider.setText(String.valueOf(lg.getAmount() - lg.getAmountBorrowed()));
+        amount_divider.setText("/" + Float.valueOf(lg.getAmount() - lg.getAmountBorrowed()).toString());
         investor_amount = viewThis.findViewById(R.id.investor_amount);
         button_invest = viewThis.findViewById(R.id.button_invest);
 
@@ -196,7 +196,7 @@ public class investorFragment extends Fragment {
                                     lender.setUserId(userHolder.email);
                                     lender.setUserName(userHolder.name);
                                     lender.setAmount_Lent(f);
-                                    lender.setAmount_lent(true);
+                                    lender.setAmount_lent(false);
                                     lender.setAmount_refunded(false);
                                     Float amtRtForLender = lender.getAmount_Lent() + (lender.getAmount_Lent() * lg.getInterest() * lg.getTenureMonths()) / ((Float.valueOf("12")) * Float.valueOf("100.00"));
                                     lender.setReturnAmount(amtRtForLender);

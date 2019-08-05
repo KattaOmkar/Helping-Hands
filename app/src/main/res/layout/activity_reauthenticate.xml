@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Re enter password"
+        android:textAllCaps="true"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteY="113dp" />
+
+    <EditText
+        android:id="@+id/editTextReauth"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/trnas_white"
+
+        android:gravity="center"
+        android:hint="@string/login_pass"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimaryDark"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="207dp" />
+
+    <Button
+        android:id="@+id/buttonReauth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="315dp" />
+</android.support.constraint.ConstraintLayout>

@@ -109,6 +109,32 @@ public class FireService {
         return this.firestore.collection("loanGroups");
     }
 
+    public Task<Void> updateLoan(LoanGroup loanGroup) {
+        if (loanGroup == null) {
+            return null;
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("borrowerID", loanGroup.getBorrowerID());
+        map.put("borrowerName", loanGroup.getBorrowerName());
+        map.put("reason", loanGroup.getReason());
+        map.put("phone", loanGroup.getPhone());
+        map.put("borrowerAddress", loanGroup.getBorrowerAddress());
+        map.put("amount", loanGroup.getAmount());
+        map.put("amountBorrowed", Float.valueOf(0));
+        map.put("date", loanGroup.getDate());
+        map.put("interest", loanGroup.getInterest());
+        map.put("tenureMonths", loanGroup.getTenureMonths());
+        Log.d(TAG, "update loan: ***********************");
+        Log.d(TAG, map.toString());
+        Log.d(TAG, map.get("borrowerID").toString() + "__" + map.get("date").toString());
+        Task<Void> task = this.getLoansCollection()
+                .document(map.get("borrowerID").toString() + "__" + map.get("date").toString())
+                .update(map);
+
+        return task;
+    }
+
     public Task<Void> createNewLoan(LoanGroup loanGroup) {
 
         if (loanGroup == null) {
@@ -128,7 +154,8 @@ public class FireService {
         map.put("tenureMonths", loanGroup.getTenureMonths());
         Log.d(TAG, "createNewLoan: ***********************");
         Log.d(TAG, map.toString());
-        Task<Void> task = this.getLoansCollection().document(map.get("borrowerID").toString() + "__" + map.get("date").toString())
+        Task<Void> task = this.getLoansCollection()
+                .document(map.get("borrowerID").toString() + "__" + map.get("date").toString())
                 .set(map);
 
         return task;
